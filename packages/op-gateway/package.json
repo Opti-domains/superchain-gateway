@@ -1,0 +1,33 @@
+{
+  "name": "@optidomains/op-gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/op-gateway/server.js",
+    "start:sepolia": "node dist/op-gateway/server.js --l1-provider-url https://1rpc.io/sepolia",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.147",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@chainlink/ccip-read-server": "^0.2.1",
+    "@commander-js/extra-typings": "^13.1.0",
+    "@ethereumjs/block": "^5.3.0",
+    "@ethersproject/abi": "^5.7.0",
+    "aws-lambda": "^1.0.7",
+    "commander": "^13.1.0",
+    "cors": "^2.8.5",
+    "ethers": "^6.13.5",
+    "express": "^4.21.2",
+    "generic-rest-api-router": "^1.2.0"
+  }
+}

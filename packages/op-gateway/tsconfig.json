@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                     // Use a modern ECMAScript version for output.
+    "module": "commonjs",                   // Use CommonJS module system (adjust if using ESM).
+    "allowJs": true,                       // Disallow JavaScript files (set to true if mixing JS).
+    "outDir": "./dist",                     // Output directory for compiled files.
+    "rootDir": "./src",                     // Root directory of source files.
+    "strict": true,                         // Enable all strict type-checking options.
+    "moduleResolution": "node",             // Use Node.js module resolution.
+    "esModuleInterop": true,                // Enable compatibility with CommonJS modules.
+    "forceConsistentCasingInFileNames": true, // Ensure file name case consistency.
+    "skipLibCheck": true,                   // Skip type checking of declaration files for faster builds.
+    "sourceMap": true,                      // Generate source maps for debugging.
+    "resolveJsonModule": true,              // Allow importing JSON files as modules.
+    "noImplicitAny": true,                  // Raise error on expressions with an implied 'any' type.
+    "noUnusedLocals": false,                // Report errors on unused local variables.
+    "noUnusedParameters": false             // Report errors on unused parameters.
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

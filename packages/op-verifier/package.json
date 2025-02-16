@@ -1,0 +1,30 @@
+{
+  "name": "@optidomains/op-verifier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "find node_modules/src/src -mindepth 1 -maxdepth 1 -exec basename {} \\; | xargs -I {} sh -c 'rm -rf node_modules/src/{}; ln -s src/{} node_modules/src/{}'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "^0.15.9",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "chai": "4",
+    "ethers": "^6.13.5",
+    "hardhat": "^2.22.18"
+  },
+  "dependencies": {
+    "@eth-optimism/contracts": "^0.6.0",
+    "@eth-optimism/contracts-bedrock": "^0.16.2",
+    "@openzeppelin/contracts": "^5.2.0",
+    "@optidomains/evm-verifier": "workspace:*",
+    "dotenv": "^16.4.7",
+    "src": "npm:@eth-optimism/contracts-bedrock@0.17.3"
+  }
+}
