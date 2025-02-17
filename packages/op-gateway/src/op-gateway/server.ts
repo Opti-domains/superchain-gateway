@@ -14,16 +14,26 @@ const program = new Command()
     "-u, --l1-provider-url <url>",
     "l1 provider url",
     "https://rpc.ankr.com/eth"
-  );
+  )
+  .option("--l1-provider-url-2 <url>", "secondary l1 provider url")
+  .option("--l1-provider-url-3 <url>", "tertiary l1 provider url");
 
 program.parse();
 
 (async () => {
   const options = program.opts();
 
-  const l1Provider = new JsonRpcProvider(options.l1ProviderUrl);
+  const providers = [new JsonRpcProvider(options.l1ProviderUrl)];
 
-  const gateway = new EVMGateway(new OPProofService(l1Provider));
+  if (options.l1ProviderUrl2) {
+    providers.push(new JsonRpcProvider(options.l1ProviderUrl2));
+  }
+
+  if (options.l1ProviderUrl3) {
+    providers.push(new JsonRpcProvider(options.l1ProviderUrl3));
+  }
+
+  const gateway = new EVMGateway(new OPProofService(providers));
   const server = new ServerLambda();
   gateway.add(server);
 

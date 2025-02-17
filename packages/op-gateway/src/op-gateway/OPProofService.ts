@@ -7,6 +7,7 @@ import { type JsonRpcBlock } from "@ethereumjs/block";
 import {
   AbiCoder,
   Contract,
+  FallbackProvider,
   getAddress,
   JsonRpcProvider,
   type AddressLike,
@@ -59,11 +60,18 @@ const L2_PROVIDERS: {
  *
  */
 export class OPProofService implements IProofService<OPProvableBlock> {
-  private readonly l1Provider: JsonRpcProvider;
+  private readonly l1Provider: FallbackProvider;
   private opOutputLookup: Contract;
 
-  constructor(l1Provider: JsonRpcProvider) {
-    this.l1Provider = l1Provider;
+  constructor(l1Provider: JsonRpcProvider[]) {
+    this.l1Provider = new FallbackProvider(
+      l1Provider.map((p, i) => ({
+        provider: p,
+        priority: l1Provider.length - i,
+        weight: l1Provider.length - i,
+        stallTimeout: 2000,
+      }))
+    );
 
     this.opOutputLookup = new Contract(
       OP_OUTPUT_LOOKUP,
