@@ -82,7 +82,9 @@ export class OPProofService implements IProofService<OPProvableBlock> {
       return L2_PROVIDERS[optimismPortalAddress];
     }
 
-    const rpc = RPC[optimismPortalAddress as keyof typeof RPC];
+    const rpc =
+      process.env[`RPC_${optimismPortalAddress}`] ||
+      RPC[optimismPortalAddress as keyof typeof RPC];
 
     if (!rpc) {
       throw new Error("This optimism portal is not in the superchain registry");
