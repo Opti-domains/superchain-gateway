@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {IEVMVerifier} from "@optidomains/evm-verifier/contracts/IEVMVerifier.sol";
 import {StateProof, EVMProofHelper} from "@optidomains/evm-verifier/contracts/EVMProofHelper.sol";
 import {DisputeGameLookup, L2OutputOracleLookup, IOptimismPortalOutputRoot, OPWitnessProofType} from "./lib/OPOutputLookup.sol";
@@ -15,7 +16,7 @@ struct OPWitnessData {
     Types.OutputRootProof outputRootProof;
 }
 
-contract OPVerifier is IEVMVerifier {
+contract OPVerifier is IEVMVerifier, Initializable {
     using Strings for address;
     using Strings for uint256;
 
@@ -30,9 +31,12 @@ contract OPVerifier is IEVMVerifier {
 
     string[] _gatewayURLs;
 
-    constructor(string[] memory urls, uint256 maximumAge) {
-        _gatewayURLs = urls;
+    constructor(uint256 maximumAge) {
         maxAge = maximumAge;
+    }
+
+    function initialize(string[] memory urls) external initializer {
+        _gatewayURLs = urls;
     }
 
     function gatewayURLs(

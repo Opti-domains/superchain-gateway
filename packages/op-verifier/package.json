@@ -23,6 +23,7 @@
     "@eth-optimism/contracts": "^0.6.0",
     "@eth-optimism/contracts-bedrock": "^0.16.2",
     "@openzeppelin/contracts": "^5.2.0",
+    "@openzeppelin/contracts-upgradeable": "^5.2.0",
     "@optidomains/evm-verifier": "workspace:*",
     "dotenv": "^16.4.7",
     "src": "npm:@eth-optimism/contracts-bedrock@0.17.3"

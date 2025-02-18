@@ -20,7 +20,7 @@ describe("OPVerifier", () => {
     });
 
     target = new ethers.Contract(
-      "0x57348b15057cC6FeAe36Cd0Fc2018618809B4c5F",
+      "0x077b4Ebc71C569F7B61841Fe0caf0ca609F4053F",
       TestL1ABI,
       provider
     );

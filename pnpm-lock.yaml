@@ -93,6 +93,9 @@ importers:
       '@openzeppelin/contracts':
         specifier: ^5.2.0
         version: 5.2.0
+      '@openzeppelin/contracts-upgradeable':
+        specifier: ^5.2.0
+        version: 5.2.0(@openzeppelin/contracts@5.2.0)
       '@optidomains/evm-verifier':
         specifier: workspace:*
         version: link:../evm-verifier
@@ -988,6 +991,14 @@ packages:
       '@nomicfoundation/solidity-analyzer-linux-x64-musl': 0.1.2
       '@nomicfoundation/solidity-analyzer-win32-x64-msvc': 0.1.2
     dev: true
+
+  /@openzeppelin/contracts-upgradeable@5.2.0(@openzeppelin/contracts@5.2.0):
+    resolution: {integrity: sha512-mZIu9oa4tQTlGiOJHk6D3LdJlqFqF6oNOSn6S6UVJtzfs9UsY9/dhMEbAVTwElxUtJnjpf6yA062+oBp+eOyPg==}
+    peerDependencies:
+      '@openzeppelin/contracts': 5.2.0
+    dependencies:
+      '@openzeppelin/contracts': 5.2.0
+    dev: false
 
   /@openzeppelin/contracts@5.2.0:
     resolution: {integrity: sha512-bxjNie5z89W1Ea0NZLZluFh8PrFNn9DH8DQlujEok2yjsOlraUPKID5p1Wk3qdNbf6XkQ1Os2RvfiHrrXLHWKA==}
