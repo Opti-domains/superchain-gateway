@@ -7,11 +7,11 @@ import OPVerifierModule from "./OPVerifier";
 const TestL1Module = buildModule("TestL1Module", (m) => {
   const target = m.getParameter(
     "target",
-    "0xFaC1E6fc6996ef8cdd39E3B29C477C68D3f50d69"
+    "0xFF0303afA52aae7BBAFd5EED084aCfC3A2F78d02"
   );
   const portal = m.getParameter(
     "portal",
-    "0x16Fc5058F25648194471939df75CF27A2fdC48BC"
+    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
   );
   const minAge = m.getParameter("minAge", 3600);
 

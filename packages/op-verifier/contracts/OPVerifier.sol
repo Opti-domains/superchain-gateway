@@ -20,12 +20,22 @@ contract OPVerifier is IEVMVerifier, Initializable {
     using Strings for address;
     using Strings for uint256;
 
+    /**
+     * @dev Storage slot with the admin of the contract.
+     * This is the keccak-256 hash of "opverifier.admin" subtracted by 1.
+     */
+    // solhint-disable-next-line private-vars-leading-underscore
+    bytes32 internal constant ADMIN_SLOT =
+        0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;
+
     error OutputRootMismatch(
         OPWitnessProofType proofType,
         uint256 index,
         bytes32 expected,
         bytes32 actual
     );
+
+    error NotAdmin();
 
     uint256 public immutable maxAge;
 
@@ -35,7 +45,12 @@ contract OPVerifier is IEVMVerifier, Initializable {
         maxAge = maximumAge;
     }
 
-    function initialize(string[] memory urls) external initializer {
+    function setGatewayUrls(string[] memory urls) external {
+        address admin;
+        assembly {
+            admin := sload(ADMIN_SLOT)
+        }
+        if (msg.sender != admin) revert NotAdmin();
         _gatewayURLs = urls;
     }
 

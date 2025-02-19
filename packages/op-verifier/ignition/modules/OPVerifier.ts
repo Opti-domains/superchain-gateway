@@ -4,9 +4,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 const OPVerifierModule = buildModule("OPVerifierModule", (m) => {
-  const gatewayURLs = m.getParameter("gatewayURLs", [
-    "https://gateway-sepolia.opti.domains",
-  ]);
   const maxAge = m.getParameter("maxAge", 1296000); // 15 days
 
   const proxyAdminOwner = m.getParameter(
@@ -14,25 +11,23 @@ const OPVerifierModule = buildModule("OPVerifierModule", (m) => {
     "0x8b6c27ec466923fad66Ada94c78AA320eA876969"
   );
 
-  const opVerifierImpl = m.contract("OPVerifier", [maxAge]);
+  const opVerifierImpl = m.contract("OPVerifier", [maxAge], {
+    id: "OPVerifierImpl",
+  });
 
-  m.call(opVerifierImpl, "initialize", [gatewayURLs]);
-
-  const data = m.encodeFunctionCall(opVerifierImpl, "initialize", [
-    gatewayURLs,
-  ]);
-
-  const opVerifier = m.contract("TransparentUpgradeableProxy", [
+  const proxy = m.contract("TransparentUpgradeableProxy", [
     opVerifierImpl,
     proxyAdminOwner,
-    data,
+    "0x",
   ]);
 
   const proxyAdminAddress = m.readEventArgument(
-    opVerifier,
+    proxy,
     "AdminChanged",
     "newAdmin"
   );
+
+  const opVerifier = m.contractAt("OPVerifier", proxy);
 
   const proxyAdmin = m.contractAt("ProxyAdmin", proxyAdminAddress);
 

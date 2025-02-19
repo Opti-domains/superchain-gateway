@@ -1,6 +1,7 @@
 {
-  "OPVerifierModule#OPVerifier": "0x75FdCc2194f81Ff40623BAE8fa9CbA9F8f2E6Af7",
-  "OPVerifierModule#TransparentUpgradeableProxy": "0x5183F823bDd097aD2e695a6493D1999235Ad39d5",
-  "OPVerifierModule#ProxyAdmin": "0xda4322d8544650aC134A5f1d3017293fb7665359",
-  "TestL1Module#TestL1": "0x077b4Ebc71C569F7B61841Fe0caf0ca609F4053F"
+  "OPVerifierModule#OPVerifierImpl": "0x03BCC8f7276e1c77aA2C282fe3c26E30f4C065cD",
+  "OPVerifierModule#TransparentUpgradeableProxy": "0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa",
+  "OPVerifierModule#OPVerifier": "0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa",
+  "OPVerifierModule#ProxyAdmin": "0xE70Ed6992Fb1b0fc8efD1D4E7D40aeA7370dDF0A",
+  "TestL1Module#TestL1": "0x5D184aDEB355FAa3b94f975CD17b82F5E63d1d3e"
 }

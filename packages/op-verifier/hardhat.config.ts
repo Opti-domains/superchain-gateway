@@ -30,6 +30,10 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    mainnet: {
+      url: `https://1rpc.io/eth`,
+      accounts: [PRIVATE_KEY],
+    },
     sepolia: {
       url: `https://1rpc.io/sepolia`,
       accounts: [PRIVATE_KEY],
