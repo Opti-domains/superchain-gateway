@@ -1,13 +1,21 @@
-# Sample Hardhat Project
+# Opti L1 Resolver
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+A resolver contract that resolves ENS names on the Superchain through the CCIP gateway.
 
-Try running some of the following tasks:
+## Build
+
+```bash
+pnpm build
+```
+
+## Deployments
+
+L1 Resolver contracts are deployed to the same address across chains:
+- Ethereum Mainnet: [0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72](https://etherscan.io/address/0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72)
+- Ethereum Sepolia: [0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72](https://sepolia.etherscan.io/address/0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72)
+
+To deploy in a new chain, run:
 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+npx hardhat ignition deploy ./ignition/modules/SingularL1Resolver.ts --network sepolia --strategy create2 --verify
 ```

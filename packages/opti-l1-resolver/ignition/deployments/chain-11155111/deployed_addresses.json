@@ -1,0 +1,7 @@
+{
+  "SingularL1ResolverModule#SingularL1ResolverImpl": "0xaB7798dC05F131Bc1B183364161f1a79418f7D61",
+  "SingularL1ResolverModule#TransparentUpgradeableProxy": "0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72",
+  "SingularL1ResolverModule#SingularL1Resolver": "0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72",
+  "SingularL1ResolverModule#ProxyAdmin": "0x534a4c131c85df0D9F440E2543C6F221812B0E94",
+  "SingularL1ResolverFixModule#SingularL1ResolverImpl": "0x4Bd79C803eBF4cccd15659Ae1a5C250770197d97"
+}

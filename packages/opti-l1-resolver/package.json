@@ -19,6 +19,7 @@
     "hardhat": "^2.22.18"
   },
   "dependencies": {
+    "@ensdomains/ens-contracts": "^1.2.5",
     "@eth-optimism/contracts": "^0.6.0",
     "@eth-optimism/contracts-bedrock": "^0.16.2",
     "@openzeppelin/contracts": "^5.2.0",

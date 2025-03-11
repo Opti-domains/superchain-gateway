@@ -1,0 +1,6 @@
+{
+  "SingularL1ResolverModule#SingularL1ResolverImpl": "0x2B1785A7d846Ed2d1D0c3307f569854aA1680604",
+  "SingularL1ResolverModule#TransparentUpgradeableProxy": "0x8F5E52304dF3d51D43D07c32F8c2594fa8C5a3A0",
+  "SingularL1ResolverModule#SingularL1Resolver": "0x8F5E52304dF3d51D43D07c32F8c2594fa8C5a3A0",
+  "SingularL1ResolverModule#ProxyAdmin": "0x77Cf44DB5954AF9afD2c7AED0d0D542E8c02FF09"
+}

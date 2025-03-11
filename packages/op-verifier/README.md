@@ -1,13 +1,21 @@
-# Sample Hardhat Project
+# OP Verifier
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+A verifier contract that verifies proofs from the OP CCIP gateway.
 
-Try running some of the following tasks:
+## Build
+
+```bash
+pnpm build
+```
+
+## Deployment
+
+The OP Verifier is deployed to the same address across chains:
+- Ethereum Mainnet: [0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa](https://etherscan.io/address/0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa)
+- Ethereum Sepolia: [0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa](https://sepolia.etherscan.io/address/0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa)
+
+To deploy in a new chain, run:
 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+npx hardhat ignition deploy ./ignition/modules/OPVerifier.ts --network sepolia --strategy create2 --verify
 ```

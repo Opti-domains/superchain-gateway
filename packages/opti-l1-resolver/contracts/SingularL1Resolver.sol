@@ -4,6 +4,12 @@ pragma solidity ^0.8.17;
 import {EVMFetcher} from "@optidomains/evm-verifier/contracts/EVMFetcher.sol";
 import {EVMFetchTarget} from "@optidomains/evm-verifier/contracts/EVMFetchTarget.sol";
 import {IEVMVerifier} from "@optidomains/evm-verifier/contracts/IEVMVerifier.sol";
+import {IAddrResolver} from "@ensdomains/ens-contracts/contracts/resolvers/profiles/IAddrResolver.sol";
+import {IAddressResolver} from "@ensdomains/ens-contracts/contracts/resolvers/profiles/IAddressResolver.sol";
+import {ITextResolver} from "@ensdomains/ens-contracts/contracts/resolvers/profiles/ITextResolver.sol";
+import {IContentHashResolver} from "@ensdomains/ens-contracts/contracts/resolvers/profiles/IContentHashResolver.sol";
+import {IExtendedResolver} from "@ensdomains/ens-contracts/contracts/resolvers/profiles/IExtendedResolver.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 // Interface for ENS Registry
 interface IENSRegistry {
@@ -15,7 +21,14 @@ interface INameWrapper {
     function ownerOf(uint256 id) external view returns (address);
 }
 
-contract SingularL1Resolver is EVMFetchTarget {
+contract SingularL1Resolver is
+    EVMFetchTarget,
+    IAddrResolver,
+    IAddressResolver,
+    ITextResolver,
+    IContentHashResolver,
+    IERC165
+{
     using EVMFetcher for EVMFetcher.EVMFetchRequest;
 
     struct VerifierConfig {
@@ -84,7 +97,7 @@ contract SingularL1Resolver is EVMFetchTarget {
 
     function setDefaultVerifierConfig(
         INameWrapper _nameWrapper,
-        VerifierConfig calldata _config
+        VerifierConfig memory _config
     ) public onlyOwner {
         nameWrapper = _nameWrapper;
         defaultVerifierConfig = _config;
@@ -92,7 +105,7 @@ contract SingularL1Resolver is EVMFetchTarget {
 
     function setVerifierConfig(
         bytes32 node,
-        VerifierConfig calldata _config
+        VerifierConfig memory _config
     ) public authorized(node) {
         verifierConfigs[node] = _config;
     }
@@ -107,114 +120,200 @@ contract SingularL1Resolver is EVMFetchTarget {
         return config;
     }
 
+    function bytesToAddress(
+        bytes memory b
+    ) internal pure returns (address payable a) {
+        require(b.length == 20);
+        assembly {
+            a := div(mload(add(b, 32)), exp(256, 12))
+        }
+    }
+
     function addr(
         bytes32 node,
         uint256 cointype
-    ) public view returns (address) {
+    ) public view returns (bytes memory) {
+        return _addr(node, cointype, this.addrCallback.selector);
+    }
+
+    function addr(bytes32 node) public view returns (address payable) {
+        _addr(node, 60, this.addrEvmCallback.selector);
+    }
+
+    function _addr(
+        bytes32 node,
+        uint256 cointype,
+        bytes4 callback
+    ) internal view returns (bytes memory) {
         VerifierConfig memory config = getVerifierConfig(node);
         EVMFetcher
             .newFetchRequest(config.verifier, config.resolver)
-            .getStatic(0)
+            .getDynamic(0)
             .element(node)
             .element(cointype)
-            .fetch(
-                this.addrCallback.selector,
-                abi.encode(node),
-                config.verifierData
-            );
-    }
-
-    function addr(bytes32 node) public view returns (address) {
-        return addr(node, 60);
+            .fetch(callback, msg.data[0:4], config.verifierData);
     }
 
     function addrCallback(
         bytes[] memory values,
-        bytes memory
-    ) public pure returns (address) {
-        return abi.decode(values[0], (address));
+        bytes memory sig
+    ) public pure returns (bytes memory) {
+        if (keccak256(sig) != keccak256(hex"9061b923")) {
+            return values[0];
+        }
+        return abi.encode(values[0]);
+    }
+
+    function addrEvmCallback(
+        bytes[] memory values,
+        bytes memory sig
+    ) public pure returns (bytes memory) {
+        address result = address(bytes20(values[0]));
+        if (keccak256(sig) != keccak256(hex"9061b923")) {
+            // Return address instead of bytes
+            assembly {
+                let freemem := mload(0x40)
+                mstore(freemem, result)
+                return(freemem, 0x20)
+            }
+        }
+        return abi.encode(result);
     }
 
     function text(
         bytes32 node,
         string calldata key
     ) public view returns (string memory) {
+        return _text(node, key, this.textCallback.selector);
+    }
+
+    function _text(
+        bytes32 node,
+        string memory key,
+        bytes4 callback
+    ) internal view returns (string memory) {
         VerifierConfig memory config = getVerifierConfig(node);
         EVMFetcher
             .newFetchRequest(config.verifier, config.resolver)
             .getDynamic(1)
             .element(node)
             .element(key)
-            .fetch(
-                this.textCallback.selector,
-                abi.encode(node, key),
-                config.verifierData
-            );
+            .fetch(callback, msg.data[0:4], config.verifierData);
     }
 
     function textCallback(
         bytes[] memory values,
-        bytes memory
-    ) public pure returns (string memory) {
-        return string(values[0]);
+        bytes memory sig
+    ) public pure returns (bytes memory) {
+        if (keccak256(sig) != keccak256(hex"9061b923")) {
+            return values[0];
+        }
+        return abi.encode(values[0]);
     }
 
-    function getData(
+    function data(
         bytes32 node,
         string calldata key
     ) public view returns (bytes memory) {
+        return _data(node, key, this.dataCallback.selector);
+    }
+
+    function _data(
+        bytes32 node,
+        string memory key,
+        bytes4 callback
+    ) internal view returns (bytes memory) {
         VerifierConfig memory config = getVerifierConfig(node);
         EVMFetcher
             .newFetchRequest(config.verifier, config.resolver)
             .getDynamic(2)
             .element(node)
             .element(key)
-            .fetch(
-                this.getDataCallback.selector,
-                abi.encode(node, key),
-                config.verifierData
-            );
+            .fetch(callback, msg.data[0:4], config.verifierData);
     }
 
-    function getDataCallback(
+    function dataCallback(
         bytes[] memory values,
-        bytes memory
+        bytes memory sig
     ) public pure returns (bytes memory) {
-        return values[0];
+        if (keccak256(sig) != keccak256(hex"9061b923")) {
+            return values[0];
+        }
+        return abi.encode(values[0]);
     }
 
     function contenthash(bytes32 node) public view returns (bytes memory) {
+        return _contenthash(node, this.contenthashCallback.selector);
+    }
+
+    function _contenthash(
+        bytes32 node,
+        bytes4 callback
+    ) internal view returns (bytes memory) {
         VerifierConfig memory config = getVerifierConfig(node);
         EVMFetcher
             .newFetchRequest(config.verifier, config.resolver)
             .getDynamic(3)
             .element(node)
-            .fetch(
-                this.contenthashCallback.selector,
-                abi.encode(node),
-                config.verifierData
-            );
+            .fetch(callback, msg.data[0:4], config.verifierData);
     }
 
     function contenthashCallback(
         bytes[] memory values,
-        bytes memory
+        bytes memory sig
     ) public pure returns (bytes memory) {
-        return values[0];
+        if (keccak256(sig) != keccak256(hex"9061b923")) {
+            return values[0];
+        }
+        return abi.encode(values[0]);
     }
 
     function resolve(
-        bytes memory /* name */,
-        bytes memory data
+        bytes calldata /* name */,
+        bytes calldata data
     ) external view returns (bytes memory) {
-        (bool success, bytes memory result) = address(this).staticcall(data);
-        if (success) {
-            return result;
-        } else {
-            // Revert with the reason provided by the call
-            assembly {
-                revert(add(result, 0x20), mload(result))
-            }
+        bytes4 selector = bytes4(data);
+
+        if (selector == IAddrResolver.addr.selector) {
+            bytes32 node = abi.decode(data[4:], (bytes32));
+            return _addr(node, 60, this.addrEvmCallback.selector);
         }
+        if (selector == IAddressResolver.addr.selector) {
+            (bytes32 node, uint256 cointype) = abi.decode(
+                data[4:],
+                (bytes32, uint256)
+            );
+            return _addr(node, cointype, this.addrCallback.selector);
+        }
+        if (selector == ITextResolver.text.selector) {
+            (bytes32 node, string memory key) = abi.decode(
+                data[4:],
+                (bytes32, string)
+            );
+            return bytes(_text(node, key, this.textCallback.selector));
+        }
+        if (selector == IContentHashResolver.contenthash.selector) {
+            bytes32 node = abi.decode(data[4:], (bytes32));
+            return _contenthash(node, this.contenthashCallback.selector);
+        }
+        if (selector == 0xecbfada3) {
+            (bytes32 node, string memory key) = abi.decode(
+                data[4:],
+                (bytes32, string)
+            );
+            return bytes(_data(node, key, this.dataCallback.selector));
+        }
+    }
+
+    function supportsInterface(
+        bytes4 interfaceID
+    ) public view virtual override returns (bool) {
+        return
+            interfaceID == type(IAddrResolver).interfaceId ||
+            interfaceID == type(IAddressResolver).interfaceId ||
+            interfaceID == type(ITextResolver).interfaceId ||
+            interfaceID == type(IContentHashResolver).interfaceId ||
+            interfaceID == type(IExtendedResolver).interfaceId ||
+            interfaceID == type(IERC165).interfaceId;
     }
 }

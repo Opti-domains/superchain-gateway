@@ -127,6 +127,9 @@ importers:
 
   packages/opti-l1-resolver:
     dependencies:
+      '@ensdomains/ens-contracts':
+        specifier: ^1.2.5
+        version: 1.2.5
       '@eth-optimism/contracts':
         specifier: ^0.6.0
         version: 0.6.0(ethers@6.13.5)
@@ -200,6 +203,25 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
+
+  /@ensdomains/buffer@0.1.1:
+    resolution: {integrity: sha512-92SfSiNS8XorgU7OUBHo/i1ZU7JV7iz/6bKuLPNVsMxV79/eI7fJR6jfJJc40zAHjs3ha+Xo965Idomlq3rqnw==}
+    dev: false
+
+  /@ensdomains/ens-contracts@1.2.5:
+    resolution: {integrity: sha512-bzoc/o5OAF1NP2PeCmKhexspT8hVkQZfvN1n2bLNDCPWhdNfyVU2peNqVwqFh/gah9L1GJabhPPU2gKRURgD5g==}
+    dependencies:
+      '@ensdomains/buffer': 0.1.1
+      '@ensdomains/solsha1': 0.0.3
+      '@openzeppelin/contracts': 4.9.6
+      dns-packet: 5.6.1
+    dev: false
+
+  /@ensdomains/solsha1@0.0.3:
+    resolution: {integrity: sha512-uhuG5LzRt/UJC0Ux83cE2rCKwSleRePoYdQVcqPN1wyf3/ekMzT/KZUF9+v7/AG5w9jlMLCQkUM50vfjr0Yu9Q==}
+    dependencies:
+      hash-test-vectors: 1.3.2
+    dev: false
 
   /@eth-optimism/contracts-bedrock@0.16.2:
     resolution: {integrity: sha512-a2+f7soDbrd6jV74U02EpyMwQt2iZeDZ4c2ZwgkObcxXUZLZQ2ELt/VRFBf8TIL3wYcBOGpUa1aXAE2oHQ7oRA==}
@@ -638,6 +660,10 @@ packages:
       '@jridgewell/sourcemap-codec': 1.5.0
     dev: true
 
+  /@leichtgewicht/ip-codec@2.0.5:
+    resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
+    dev: false
+
   /@metamask/eth-sig-util@4.0.1:
     resolution: {integrity: sha512-tghyZKLHZjcdlDqCA3gNZmLeR0XvOE9U1qoQO9ohyAZT6Pya+H9vkBPcsyXytmYLNgVoin7CKCmweo/R43V+tQ==}
     engines: {node: '>=12.0.0'}
@@ -1020,6 +1046,10 @@ packages:
       '@openzeppelin/contracts': 5.2.0
     dependencies:
       '@openzeppelin/contracts': 5.2.0
+    dev: false
+
+  /@openzeppelin/contracts@4.9.6:
+    resolution: {integrity: sha512-xSmezSupL+y9VkHZJGDoCBpmnB2ogM13ccaYDWqJTfS3dbuHkgjuwDFUmaFauBCboQMGB/S5UqUl2y54X99BmA==}
     dev: false
 
   /@openzeppelin/contracts@5.2.0:
@@ -2125,6 +2155,13 @@ packages:
       path-type: 4.0.0
     dev: true
 
+  /dns-packet@5.6.1:
+    resolution: {integrity: sha512-l4gcSouhcgIKRvyy99RNVOgxXiicE+2jZoNmaNmZ6JXiGajBOJAesk1OBlJuM5k2c+eudGdLxDqXuPCKIj6kpw==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@leichtgewicht/ip-codec': 2.0.5
+    dev: false
+
   /dotenv@16.4.7:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
@@ -2965,6 +3002,10 @@ packages:
       readable-stream: 3.6.2
       safe-buffer: 5.2.1
     dev: true
+
+  /hash-test-vectors@1.3.2:
+    resolution: {integrity: sha512-PKd/fitmsrlWGh3OpKbgNLE04ZQZsvs1ZkuLoQpeIKuwx+6CYVNdW6LaPIS1QAdZvV40+skk0w4YomKnViUnvQ==}
+    dev: false
 
   /hash.js@1.1.7:
     resolution: {integrity: sha512-taOaskGt4z4SOANNseOviYDvjEJinIkRgmp7LbKP2YTTmVxWBl87s/uzK9r+44BclBSp2X7K1hqeNfz9JbBeXA==}

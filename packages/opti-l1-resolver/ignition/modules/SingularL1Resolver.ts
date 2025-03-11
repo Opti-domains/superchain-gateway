@@ -16,7 +16,9 @@ const SingularL1ResolverModule = buildModule(
     ); // Admin address
 
     // Deploy implementation
-    const implementation = m.contract("SingularL1Resolver", [registry]);
+    const implementation = m.contract("SingularL1Resolver", [registry], {
+      id: "SingularL1ResolverImpl",
+    });
 
     // Deploy transparent proxy
     const proxy = m.contract("TransparentUpgradeableProxy", [
