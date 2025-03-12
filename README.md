@@ -9,6 +9,29 @@ Superchain ENS Gateway is a CCIP gateway connecting domain name on the Superchai
 - [op-verifier](./packages/op-verifier): A verifier contract that verifies proofs from the OP CCIP gateway.
 - [opti-l1-resolver](./packages/opti-l1-resolver): A resolver contract that resolves ENS names on the Superchain through the CCIP gateway.
 
+## Deployments
+
+### Opti L1 Resolver
+
+Unlike other solutions that require you to develop your own gateway on the ETH mainnet, our approach is designed for ease of use: simply set your ENS mainnet resolver to our Superchain Resolver and point it to your SingularResolver deployment with a single transaction.
+
+- Ethereum Mainnet: [0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72](https://etherscan.io/address/0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72)
+- Ethereum Sepolia: [0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72](https://sepolia.etherscan.io/address/0x7BA8071B8AaD8E91C0eEA70D7cB6816699b1Cc72)
+
+### OP Verifier
+
+Verifier contract for implementing L1 resolver
+
+- Ethereum Mainnet: [0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa](https://etherscan.io/address/0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa)
+- Ethereum Sepolia: [0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa](https://sepolia.etherscan.io/address/0xACe5278f0bB6EeBEe4429C8bb9863066dA60d5Aa)
+
+### Gateway
+
+Opti.Domains CCIP Gateway for resolving domain records on Superchain
+
+- Mainnet: https://gateway.opti.domains
+- Sepolia Testnet: https://gateway-sepolia.opti.domains
+
 ## How our CCIP Gateway is Novel
 
 Our CCIP Gateway is innovative because it automatically handles the L2OutputOracle migration to DisputeGame and adjusts to dispute game type changes without needing to deploy a new gateway and verifier smart contract, ensuring zero downtime during this major migration.
