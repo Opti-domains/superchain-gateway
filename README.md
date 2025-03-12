@@ -19,7 +19,7 @@ Here is a comparison with current Unruggable OP Gateway implementation:
 
 | Feature                                                                                  | Unruggable | Opti.Domains |
 |------------------------------------------------------------------------------------------|------------|--------------|
-| Automatically handles the L2OutputOracle migration to DisputeGame migration              | ❌         | ✅           |
+| Automatically handles the L2OutputOracle to DisputeGame migration              | ❌         | ✅           |
 | Support any Superchain with a single instance of gateway and verifier contract deployment | ❌         | ✅           |
 | Support complex L2 data fetching operations                                               | ✅         | ❌           |
 
